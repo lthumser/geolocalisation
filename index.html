@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Coordonnées géographiques</title>
+        <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
@@ -11,34 +11,54 @@
         </style>
     </head>
     <body>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
         
         <button onclick="geolocaliser()">cliquer ici pour connaître vos coordonnées géographiques</button>
-        <br><br>
+        <br>
         <div id="conteneur"></div>
         
-        <script>
-            function successCallback(position) {
-                    conteneur.innerHTML = "Latitude : " + position.coords.latitude + "°<br>Longitude : " + position.coords.longitude+"°";
-                  }
+    <br><br><br><br>    
+        
+    <div id="carte" style="width: 600px; height: 400px;"></div>
 
-                  function errorCallback(error) {
-                      if (error.message.indexOf("Only secure origins are allowed")!=-1)
-                        conteneur.innerHTML = "La géolocalisation n'a pas été autorisée";
-                      else
-                        conteneur.innerHTML = "Erreur de géolocalisation : " + error.message;
-                  }
+    <script>
+        
+        function cree_carte(lat,long){
+            var myLatLng = [lat, long]; // Par exemple, Paris
+            var map = L.map('carte').setView(myLatLng, 12);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19
+            }).addTo(map);
+            L.marker(myLatLng).addTo(map)
+                .bindPopup('Mon emplacement')
+                .openPopup();
+            }
 
-                  var options = {
-                    enableHighAccuracy: true,
-                    timeout: 5000,
-                    maximumAge: 0
-                  };
-
-            function geolocaliser(){
-                  navigator.geolocation.getCurrentPosition(successCallback, errorCallback, options);
+        function successCallback(position) {
+                conteneur.innerHTML = "Latitude : " + position.coords.latitude + "°<br>Longitude : " + position.coords.longitude+"°";
+                cree_carte(position.coords.latitude, position.coords.longitude);
               }
+
+              function errorCallback(error) {
+                  if (error.message.indexOf("Only secure origins are allowed")!=-1)
+                    conteneur.innerHTML = "La géolocalisation n'a pas été autorisée";
+                  else
+                    conteneur.innerHTML = "Erreur de géolocalisation : " + error.message;
+              }
+
+              var options = {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0
+              };
+
+        function geolocaliser(){
+              navigator.geolocation.getCurrentPosition(successCallback, errorCallback, options);
+          }
         </script>
     </body>
 </html>
+
 
 
