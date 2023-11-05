@@ -1,12 +1,44 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>ceci est une page sur la géolocalisation</title>
-</head>
-<body>
-    <h1>Cette page web concerne la géolocalisation</h1>
-    <p>c'est bien la géoloc !</p>
-</body>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                background-color: rgba(0,100,200,0.2);
+            }
+        </style>
+    </head>
+    <body>
+        
+        <button onclick="geolocaliser()">cliquer ici pour connaître vos coordonnées géographiques</button>
+        <br>
+        <div id="conteneur"></div>
+        
+        <script>
+            function successCallback(position) {
+                    conteneur.innerHTML = "Latitude : " + position.coords.latitude + "°<br>Longitude : " + position.coords.longitude+"°";
+                  }
+
+                  function errorCallback(error) {
+                      if (error.message.indexOf("Only secure origins are allowed")!=-1)
+                        conteneur.innerHTML = "La géolocalisation n'a pas été autorisée";
+                      else
+                        conteneur.innerHTML = "Erreur de géolocalisation : " + error.message;
+                  }
+
+                  var options = {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0
+                  };
+
+            function geolocaliser(){
+                  navigator.geolocation.getCurrentPosition(successCallback, errorCallback, options);
+              }
+        </script>
+    </body>
 </html>
 
 
