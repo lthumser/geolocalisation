@@ -18,7 +18,7 @@
         <br>
         <div id="conteneur"></div>
         
-    <br><br><br><br>    
+    <br><br>    
         
     <div id="carte" style="width: 600px; height: 400px;"></div>
 
@@ -36,7 +36,7 @@
             }
 
         function successCallback(position) {
-                conteneur.innerHTML = "Latitude : " + position.coords.latitude + "°<br>Longitude : " + position.coords.longitude+"°";
+                conteneur.innerHTML = "Latitude : " + position.coords.latitude + "°<br><br>Longitude : " + position.coords.longitude+"°";
                 cree_carte(position.coords.latitude, position.coords.longitude);
               }
 
